@@ -8,7 +8,7 @@ classdef proFigure
     methods
         function obj = proFigure(figureType, varargin)
             arguments
-                figureType (1,1) string {mustBeMember(figureType,["draft", "powerPoint"])} = "draft"     
+                figureType (1,1) string {mustBeMember(figureType,["draft", "powerPoint", "asmeConf"])} = "draft"     
             end
 
             arguments (Repeating)
@@ -33,6 +33,12 @@ classdef proFigure
             % powerpoint figure
             if figureType == "powerPoint"
                 fontsize(obj.Figure,"scale",1.75)
+            end
+
+            if figureType == "asmeConf"
+                fontsize(obj.Figure,"scale", 2)
+                % set(obj.Figure, 'Units', 'inches');
+                % set(obj.Figure, 'Position', [1, 1, 3.5, 3.5]);
             end
 
             % Set default plotting colors to Monokai Light
