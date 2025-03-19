@@ -6,9 +6,9 @@ classdef proFigure
     end
 
     methods
-        function obj = proFigure(figureType, varargin)
+        function obj = proFigure(type, varargin)
             arguments
-                figureType (1,1) string {mustBeMember(figureType,["draft", "powerPoint", "asmeConf"])} = "draft"     
+                type (1, 1) figureType = figureType.draft
             end
 
             arguments (Repeating)
@@ -22,23 +22,32 @@ classdef proFigure
             grid on;
             grid minor;
             set(obj.Figure, 'DefaultTextInterpreter', 'latex');
-            set(findall(obj.Figure,'-property','TickLabelInterpreter'),'TickLabelInterpreter','latex')
+            set(findall(obj.Figure, '-property', 'TickLabelInterpreter'), 'TickLabelInterpreter', 'latex')
             set(obj.Figure, 'DefaultLegendInterpreter', 'latex');
             set(obj.Figure, 'DefaultColorbarFontName', 'latex');
             set(obj.Figure, 'DefaultColorbarTickLabelInterpreter', 'latex');
             set(gca, 'DefaultLineLineWidth', 1.2);
 
-
             % Add code to change default fontsize if we're making a
             % powerpoint figure
-            if figureType == "powerPoint"
-                fontsize(obj.Figure,"scale",1.75)
+            if type == figureType.powerPoint
+                fontsize(obj.Figure, "scale", 1.75)
             end
 
-            if figureType == "asmeConf"
-                fontsize(obj.Figure,"scale", 2)
-                % set(obj.Figure, 'Units', 'inches');
-                % set(obj.Figure, 'Position', [1, 1, 3.5, 3.5]);
+            if type == figureType.asmeConf
+                % Turn off grid elements
+                grid minor;
+
+                fontsize(obj.Figure, "scale", 1)
+                set(obj.Figure, 'Units', 'inches');
+                set(obj.Figure, 'Position', [1, 1, 3 + 9/16, 3 + 9/16]);
+                set(obj.Figure, 'Color', 'w')
+
+                ax = gca;
+                ax.FontName = "Times New Roman";
+                ax.FontSize = 11;
+
+
             end
 
             % Set default plotting colors to Monokai Light
